@@ -1,0 +1,280 @@
+[
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "created_at",
+    "expression": "value.toDate()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column created_at using expression value.toDate()"
+  },
+  {
+    "op": "core/row-removal",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "price",
+          "expression": "isBlank(value)",
+          "columnName": "price",
+          "invert": false,
+          "omitBlank": false,
+          "omitError": false,
+          "selection": [
+            {
+              "v": {
+                "v": true,
+                "l": "true"
+              }
+            }
+          ],
+          "selectBlank": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "description": "Remove rows"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "price",
+    "expression": "value.toNumber()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column price using expression value.toNumber()"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "high_price",
+    "expression": "value.toNumber()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column high_price using expression value.toNumber()"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "high_price",
+    "expression": "grel:if(isNull(value), cells[\"prices\"].value, value)",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column high_price using expression grel:if(isNull(value), cells[\"prices\"].value, value)"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "high_price",
+    "expression": "grel:if(isNull(value), cells[\"price\"].value, value)",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column high_price using expression grel:if(isNull(value), cells[\"price\"].value, value)"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "id",
+    "expression": "grel:cell.cross(\"NYPL_Dish\", \"id\").cells[\"name\"].value[0]",
+    "onError": "set-to-blank",
+    "newColumnName": "dish_name",
+    "columnInsertIndex": 1,
+    "description": "Create column dish_name at index 1 based on column id using expression grel:cell.cross(\"NYPL_Dish\", \"id\").cells[\"name\"].value[0]"
+  },
+  {
+    "op": "core/row-removal",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "dish_name",
+          "expression": "grel:isNull(value)",
+          "columnName": "dish_name",
+          "invert": false,
+          "omitBlank": false,
+          "omitError": false,
+          "selection": [
+            {
+              "v": {
+                "v": true,
+                "l": "true"
+              }
+            }
+          ],
+          "selectBlank": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "description": "Remove rows"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "menu_page_id",
+    "expression": "grel:cell.cross(\"NYPL_MenuPage\", \"id\").cells[\"menu_id\"].value[0]",
+    "onError": "set-to-blank",
+    "newColumnName": "menu_id",
+    "columnInsertIndex": 3,
+    "description": "Create column menu_id at index 3 based on column menu_page_id using expression grel:cell.cross(\"NYPL_MenuPage\", \"id\").cells[\"menu_id\"].value[0]"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "menu_id",
+    "expression": "grel:cell.cross(\"NYPL_Menu\", \"id\").cells[\"currency\"].value[0]",
+    "onError": "set-to-blank",
+    "newColumnName": "currency",
+    "columnInsertIndex": 4,
+    "description": "Create column currency at index 4 based on column menu_id using expression grel:cell.cross(\"NYPL_Menu\", \"id\").cells[\"currency\"].value[0]"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "menu_id",
+    "expression": "grel:cell.cross(\"NYPL_Menu\", \"id\").cells[\"date\"].value[0]",
+    "onError": "set-to-blank",
+    "newColumnName": "menu_date",
+    "columnInsertIndex": 4,
+    "description": "Create column menu_date at index 4 based on column menu_id using expression grel:cell.cross(\"NYPL_Menu\", \"id\").cells[\"date\"].value[0]"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "text",
+          "name": "dish_name",
+          "columnName": "dish_name",
+          "query": "champa",
+          "mode": "text",
+          "caseSensitive": false,
+          "invert": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "columnName": "menu_date",
+    "expression": "value.toDate()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column menu_date using expression value.toDate()"
+  },
+  {
+    "op": "core/text-transform",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "menu_date",
+    "expression": "value.toDate()",
+    "onError": "keep-original",
+    "repeat": false,
+    "repeatCount": 10,
+    "description": "Text transform on cells in column menu_date using expression value.toDate()"
+  },
+  {
+    "op": "core/row-removal",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "currency",
+          "expression": "grel:value == \"Dollars\"",
+          "columnName": "currency",
+          "invert": false,
+          "omitBlank": false,
+          "omitError": false,
+          "selection": [
+            {
+              "v": {
+                "v": false,
+                "l": "false"
+              }
+            }
+          ],
+          "selectBlank": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "description": "Remove rows"
+  },
+  {
+    "op": "core/row-removal",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "dish_name",
+          "expression": "grel:or(\n  value.toLowercase().contains(\"caviar\"),\n  value.toLowercase().contains(\"foie\"),\n  value.toLowercase().contains(\"truffle\"),\n  value.toLowercase().contains(\"lobster\"),\n  value.toLowercase().contains(\"turtle\"),\n  value.toLowercase().contains(\"pate\"),\n  value.toLowercase().contains(\"mumm\"),\n  value.toLowercase().contains(\"champagne\"),\n  value.toLowercase().contains(\"quenelle\"),\n  value.toLowercase().contains(\"duxelle\"),\n  value.toLowercase().contains(\"soup\"),\n  value.toLowercase().contains(\"gumbo\"),\n  value.toLowercase().contains(\"rice\"),\n  value.toLowercase().contains(\"potato\"),\n  value.toLowercase().contains(\"apple\"),\n  value.toLowercase().contains(\"banana\"),\n  value.toLowercase().contains(\"onion\"),\n  value.toLowercase().contains(\"beef\"),\n  value.toLowercase().contains(\"milk\"),\n  value.toLowercase().contains(\"oats\")\n)",
+          "columnName": "dish_name",
+          "invert": false,
+          "omitBlank": false,
+          "omitError": false,
+          "selection": [
+            {
+              "v": {
+                "v": false,
+                "l": "false"
+              }
+            }
+          ],
+          "selectBlank": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "description": "Remove rows"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "dish_name",
+    "expression": "grel:if(\n  or(\n    value.toLowercase().contains(\"caviar\"),\n    value.toLowercase().contains(\"foie\"),\n    value.toLowercase().contains(\"truffle\"),\n    value.toLowercase().contains(\"lobster\"),\n    value.toLowercase().contains(\"turtle\"),\n    value.toLowercase().contains(\"pate\"),\n    value.toLowercase().contains(\"mumm\"),\n    value.toLowercase().contains(\"champagne\"),\n    value.toLowercase().contains(\"quenelle\"),\n    value.toLowercase().contains(\"duxelle\")\n  ),\n  \"Luxury\",\n  if(\n    or(\n      value.toLowercase().contains(\"soup\"),\n      value.toLowercase().contains(\"gumbo\"),\n      value.toLowercase().contains(\"rice\"),\n      value.toLowercase().contains(\"potato\"),\n      value.toLowercase().contains(\"apple\"),\n      value.toLowercase().contains(\"banana\"),\n      value.toLowercase().contains(\"onion\"),\n      value.toLowercase().contains(\"beef\"),\n      value.toLowercase().contains(\"milk\"),\n      value.toLowercase().contains(\"oats\")\n    ),\n    \"Staple\",\n    \"Other\"\n  )\n)",
+    "onError": "set-to-blank",
+    "newColumnName": "dish_type",
+    "columnInsertIndex": 2,
+    "description": "Create column dish_type at index 2 based on column dish_name using expression grel:if(\n  or(\n    value.toLowercase().contains(\"caviar\"),\n    value.toLowercase().contains(\"foie\"),\n    value.toLowercase().contains(\"truffle\"),\n    value.toLowercase().contains(\"lobster\"),\n    value.toLowercase().contains(\"turtle\"),\n    value.toLowercase().contains(\"pate\"),\n    value.toLowercase().contains(\"mumm\"),\n    value.toLowercase().contains(\"champagne\"),\n    value.toLowercase().contains(\"quenelle\"),\n    value.toLowercase().contains(\"duxelle\")\n  ),\n  \"Luxury\",\n  if(\n    or(\n      value.toLowercase().contains(\"soup\"),\n      value.toLowercase().contains(\"gumbo\"),\n      value.toLowercase().contains(\"rice\"),\n      value.toLowercase().contains(\"potato\"),\n      value.toLowercase().contains(\"apple\"),\n      value.toLowercase().contains(\"banana\"),\n      value.toLowercase().contains(\"onion\"),\n      value.toLowercase().contains(\"beef\"),\n      value.toLowercase().contains(\"milk\"),\n      value.toLowercase().contains(\"oats\")\n    ),\n    \"Staple\",\n    \"Other\"\n  )\n)"
+  }
+]
