@@ -276,5 +276,18 @@
     "newColumnName": "dish_type",
     "columnInsertIndex": 2,
     "description": "Create column dish_type at index 2 based on column dish_name using expression grel:if(\n  or(\n    value.toLowercase().contains(\"caviar\"),\n    value.toLowercase().contains(\"foie\"),\n    value.toLowercase().contains(\"truffle\"),\n    value.toLowercase().contains(\"lobster\"),\n    value.toLowercase().contains(\"turtle\"),\n    value.toLowercase().contains(\"pate\"),\n    value.toLowercase().contains(\"mumm\"),\n    value.toLowercase().contains(\"champagne\"),\n    value.toLowercase().contains(\"quenelle\"),\n    value.toLowercase().contains(\"duxelle\")\n  ),\n  \"Luxury\",\n  if(\n    or(\n      value.toLowercase().contains(\"soup\"),\n      value.toLowercase().contains(\"gumbo\"),\n      value.toLowercase().contains(\"rice\"),\n      value.toLowercase().contains(\"potato\"),\n      value.toLowercase().contains(\"apple\"),\n      value.toLowercase().contains(\"banana\"),\n      value.toLowercase().contains(\"onion\"),\n      value.toLowercase().contains(\"beef\"),\n      value.toLowercase().contains(\"milk\"),\n      value.toLowercase().contains(\"oats\")\n    ),\n    \"Staple\",\n    \"Other\"\n  )\n)"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "dish_name",
+    "expression": "grel:filter(\n  [\"caviar\", \"foie\", \"truffle\", \"lobster\", \"turtle\", \"pate\", \"mumm\", \"champagne\", \"quenelle\", \"duxelle\", \"soup\", \"gumbo\", \"rice\", \"potato\", \"apple\", \"banana\", \"onion\", \"beef\", \"milk\", \"oats\"],\n  k,\n  value.toLowercase().contains(k)\n)[0]",
+    "onError": "set-to-blank",
+    "newColumnName": "normalized_dish_name",
+    "columnInsertIndex": 2,
+    "description": "Create column normalized_dish_name at index 2 based on column dish_name using expression grel:filter(\n  [\"caviar\", \"foie\", \"truffle\", \"lobster\", \"turtle\", \"pate\", \"mumm\", \"champagne\", \"quenelle\", \"duxelle\", \"soup\", \"gumbo\", \"rice\", \"potato\", \"apple\", \"banana\", \"onion\", \"beef\", \"milk\", \"oats\"],\n  k,\n  value.toLowercase().contains(k)\n)[0]"
   }
 ]
