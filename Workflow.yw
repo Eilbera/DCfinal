@@ -1,26 +1,12 @@
 #@begin Linear_OR #@desc Linear OpenRefine Workflow
-#@param col-name:created_at
-#@param col-name:dish_name
-#@param newColumnName:dish_name
-#@param newColumnName:currency
-#@param newColumnName:menu_id
-#@param col-name:menu_id
-#@param expression:value.toDate()
-#@param col-name:high_price
-#@param expression:"grel:value_==_"Dollars""
-#@param col-name:price
-#@param expression:grel:if(isNull(value),_cells["price"].value,_value)
-#@param expression:value.toNumber()
-#@param expression:"isBlank(value)"
-#@param newColumnName:dish_type
-#@param col-name:currency
-#@param col-name:menu_page_id
 #@param expression:"grel:isNull(value)"
-#@param newColumnName:menu_date
 #@param newColumnName:normalized_dish_name
-#@param col-name:id
+#@param expression:"isBlank(value)"
+#@param expression:value.toDate()
 #@param col-name:menu_date
-#@param expression:grel:if(isNull(value),_cells["prices"].value,_value)
+#@param col-name:high_price
+#@param col-name:menu_id
+#@param newColumnName:dish_type
 #@param expression:"grel:or(
   value.toLowercase().contains("caviar"),
   value.toLowercase().contains("foie"),
@@ -43,8 +29,22 @@
   value.toLowercase().contains("milk"),
   value.toLowercase().contains("oats")
 )"
+#@param newColumnName:menu_date
+#@param col-name:dish_name
+#@param col-name:menu_page_id
+#@param col-name:price
+#@param col-name:currency
+#@param expression:grel:if(isNull(value),_cells["prices"].value,_value)
+#@param expression:value.toNumber()
+#@param newColumnName:currency
+#@param col-name:created_at
+#@param newColumnName:menu_id
+#@param col-name:id
+#@param expression:"grel:value_==_"Dollars""
+#@param expression:grel:if(isNull(value),_cells["price"].value,_value)
+#@param newColumnName:dish_name
 #@in table0
-#@out table17
+#@out table18
 #@begin core/text-transform0#@desc Text transform on cells in column created_at using expression value.toDate()
 #@param col-name:created_at
 #@param expression:value.toDate()
@@ -202,4 +202,10 @@
 #@in table16
 #@out table17
 #@end core/column-addition5
+#@begin core/row-removal4#@desc Remove rows
+#@param col-name:menu_date
+#@param expression:"grel:isNull(value)"
+#@in table17
+#@out table18
+#@end core/row-removal4
 #@end Linear_OR

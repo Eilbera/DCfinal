@@ -32,12 +32,13 @@ node[shape=box style=filled fillcolor="#CCFFCC" peripheries=1 fontname=Helvetica
 "core/row-removal3#" [shape=record rankdir=LR label="{<f0> core/row-removal3# |<f1> Remove rows}"];
 "core/column-addition4#" [shape=record rankdir=LR label="{<f0> core/column-addition4# |<f1> Create column dish_type at index 2 based on column dish_name using expression grel\:if(}"];
 "core/column-addition5#" [shape=record rankdir=LR label="{<f0> core/column-addition5# |<f1> Create column normalized_dish_name at index 2 based on column dish_name using expression grel\:filter(}"];
+"core/row-removal4#" [shape=record rankdir=LR label="{<f0> core/row-removal4# |<f1> Remove rows}"];
 
 /* Style for nodes representing non-parameter data channels in workflow */
 node[shape=box style="rounded,filled" fillcolor="#FFFFCC" peripheries=1 fontname=Helvetica]
 
 /* Nodes for non-parameter data channels in workflow */
-table17
+table18
 table0
 table1
 table2
@@ -55,6 +56,7 @@ table13
 table14
 table15
 table16
+table17
 
 /* Style for nodes representing parameter channels in workflow */
 node[shape=box style="rounded,filled" fillcolor="#FCFCFC" peripheries=1 fontname=Helvetica]
@@ -147,6 +149,10 @@ table15 -> "core/column-addition4#"
 "col-name:dish_name" -> "core/column-addition5#"
 "newColumnName:\"normalized_dish_name\"" -> "core/column-addition5#"
 table16 -> "core/column-addition5#"
+"core/row-removal4#" -> table18
+"col-name:menu_date" -> "core/row-removal4#"
+"expression:\"grel:isNull(value)\"" -> "core/row-removal4#"
+table17 -> "core/row-removal4#"
 
 /* End of double cluster for drawing box around nodes in workflow */
 }}

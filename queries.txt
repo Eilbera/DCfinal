@@ -1,0 +1,25 @@
+SELECT COUNT(*) FROM df;
+
+SELECT COUNT(*) FROM df WHERE dish_name IS NULL OR menu_date IS NULL;
+
+SELECT COUNT(DISTINCT dish_name) FROM df;
+
+SELECT dish_type, COUNT(*) FROM df GROUP BY dish_type;
+
+SELECT normalized_dish_name, COUNT(*) FROM df GROUP BY normalized_dish_name ORDER BY COUNT(*) DESC;
+
+SELECT DISTINCT dish_type FROM df WHERE dish_type NOT IN ('Luxury', 'Staple');
+
+SELECT * FROM df WHERE dish_type IN ('Luxury', 'Staple') AND normalized_dish_name IS NULL;
+
+SELECT DISTINCT normalized_dish_name FROM df WHERE normalized_dish_name NOT IN ('caviar', 'foie', 'truffle', 'lobster', 'turtle', 'pate', 'mumm', 'champagne', 'quenelle', 'duxelle', 'soup', 'gumbo', 'rice', 'potato', 'apple', 'banana', 'onion', 'beef', 'milk', 'oats');
+
+SELECT STRFTIME('%Y', menu_date) AS year, dish_type, AVG(price) AS avg_price FROM df WHERE menu_date BETWEEN '1890-01-01' AND '1940-12-31' GROUP BY year, dish_type ORDER BY year, dish_type;
+
+SELECT dish_type, AVG(price) AS avg_price, MIN(price) AS min_price, MAX(price) AS max_price FROM df GROUP BY dish_type;
+
+SELECT COUNT(*) FROM df WHERE menu_date < '1890-01-01' OR menu_date > '1940-12-31';
+
+SELECT dish_name, COUNT(DISTINCT normalized_dish_name) FROM df GROUP BY dish_name HAVING COUNT(DISTINCT normalized_dish_name) > 1;
+
+SELECT dish_type, AVG(price) AS avg_price FROM df GROUP BY dish_type HAVING AVG(price) < 0.1;

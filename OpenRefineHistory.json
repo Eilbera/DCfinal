@@ -289,5 +289,33 @@
     "newColumnName": "normalized_dish_name",
     "columnInsertIndex": 2,
     "description": "Create column normalized_dish_name at index 2 based on column dish_name using expression grel:filter(\n  [\"caviar\", \"foie\", \"truffle\", \"lobster\", \"turtle\", \"pate\", \"mumm\", \"champagne\", \"quenelle\", \"duxelle\", \"soup\", \"gumbo\", \"rice\", \"potato\", \"apple\", \"banana\", \"onion\", \"beef\", \"milk\", \"oats\"],\n  k,\n  value.toLowercase().contains(k)\n)[0]"
+  },
+  {
+    "op": "core/row-removal",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "menu_date",
+          "expression": "grel:isNull(value)",
+          "columnName": "menu_date",
+          "invert": false,
+          "omitBlank": false,
+          "omitError": false,
+          "selection": [
+            {
+              "v": {
+                "v": true,
+                "l": "true"
+              }
+            }
+          ],
+          "selectBlank": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "description": "Remove rows"
   }
 ]
