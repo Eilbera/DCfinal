@@ -1,161 +1,279 @@
-
-/* Start of top-level graph */
-digraph Workflow {
-rankdir=TB
-
-/* Title for graph */
-fontname=Helvetica; fontsize=18; labelloc=t
-label=Linear_OR
-
-/* Start of double cluster for drawing box around nodes in workflow */
-subgraph cluster_workflow_box_outer { label=""; color=black; penwidth=2
-subgraph cluster_workflow_box_inner { label=""; penwidth=0
-
-/* Style for nodes representing atomic programs in workflow */
-node[shape=box style=filled fillcolor="#CCFFCC" peripheries=1 fontname=Helvetica]
-
-/* Nodes representing atomic programs in workflow */
-"core/text-transform0#" [shape=record rankdir=LR label="{<f0> core/text-transform0# |<f1> Text transform on cells in column created_at using expression value.toDate()}"];
-"core/row-removal0#" [shape=record rankdir=LR label="{<f0> core/row-removal0# |<f1> Remove rows}"];
-"core/text-transform1#" [shape=record rankdir=LR label="{<f0> core/text-transform1# |<f1> Text transform on cells in column price using expression value.toNumber()}"];
-"core/text-transform2#" [shape=record rankdir=LR label="{<f0> core/text-transform2# |<f1> Text transform on cells in column high_price using expression value.toNumber()}"];
-"core/text-transform3#" [shape=record rankdir=LR label="{<f0> core/text-transform3# |<f1> Text transform on cells in column high_price using expression grel\:if(isNull(value), cells[\"prices\"].value, value)}"];
-"core/text-transform4#" [shape=record rankdir=LR label="{<f0> core/text-transform4# |<f1> Text transform on cells in column high_price using expression grel\:if(isNull(value), cells[\"price\"].value, value)}"];
-"core/column-addition0#" [shape=record rankdir=LR label="{<f0> core/column-addition0# |<f1> Create column dish_name at index 1 based on column id using expression grel\:cell.cross(\"NYPL_Dish\", \"id\").cells[\"name\"].value[0]}"];
-"core/row-removal1#" [shape=record rankdir=LR label="{<f0> core/row-removal1# |<f1> Remove rows}"];
-"core/column-addition1#" [shape=record rankdir=LR label="{<f0> core/column-addition1# |<f1> Create column menu_id at index 3 based on column menu_page_id using expression grel\:cell.cross(\"NYPL_MenuPage\", \"id\").cells[\"menu_id\"].value[0]}"];
-"core/column-addition2#" [shape=record rankdir=LR label="{<f0> core/column-addition2# |<f1> Create column currency at index 4 based on column menu_id using expression grel\:cell.cross(\"NYPL_Menu\", \"id\").cells[\"currency\"].value[0]}"];
-"core/column-addition3#" [shape=record rankdir=LR label="{<f0> core/column-addition3# |<f1> Create column menu_date at index 4 based on column menu_id using expression grel\:cell.cross(\"NYPL_Menu\", \"id\").cells[\"date\"].value[0]}"];
-"core/text-transform5#" [shape=record rankdir=LR label="{<f0> core/text-transform5# |<f1> Text transform on cells in column menu_date using expression value.toDate()}"];
-"core/text-transform6#" [shape=record rankdir=LR label="{<f0> core/text-transform6# |<f1> Text transform on cells in column menu_date using expression value.toDate()}"];
-"core/row-removal2#" [shape=record rankdir=LR label="{<f0> core/row-removal2# |<f1> Remove rows}"];
-"core/row-removal3#" [shape=record rankdir=LR label="{<f0> core/row-removal3# |<f1> Remove rows}"];
-"core/column-addition4#" [shape=record rankdir=LR label="{<f0> core/column-addition4# |<f1> Create column dish_type at index 2 based on column dish_name using expression grel\:if(}"];
-"core/column-addition5#" [shape=record rankdir=LR label="{<f0> core/column-addition5# |<f1> Create column normalized_dish_name at index 2 based on column dish_name using expression grel\:filter(}"];
-"core/row-removal4#" [shape=record rankdir=LR label="{<f0> core/row-removal4# |<f1> Remove rows}"];
-
-/* Style for nodes representing non-parameter data channels in workflow */
-node[shape=box style="rounded,filled" fillcolor="#FFFFCC" peripheries=1 fontname=Helvetica]
-
-/* Nodes for non-parameter data channels in workflow */
-table18
-table0
-table1
-table2
-table3
-table4
-table5
-table6
-table7
-table8
-table9
-table10
-table11
-table12
-table13
-table14
-table15
-table16
-table17
-
-/* Style for nodes representing parameter channels in workflow */
-node[shape=box style="rounded,filled" fillcolor="#FCFCFC" peripheries=1 fontname=Helvetica]
-
-/* Nodes representing parameter channels in workflow */
-"col-name:created_at"
-"expression:value.toDate()"
-"col-name:price"
-"expression:\"isBlank(value)\""
-"expression:value.toNumber()"
-"col-name:high_price"
-"expression:grel:if(isNull(value),_cells[\"prices\"].value,_value)"
-"expression:grel:if(isNull(value),_cells[\"price\"].value,_value)"
-"col-name:id"
-"col-name:dish_name"
-"expression:\"grel:isNull(value)\""
-"col-name:menu_page_id"
-"col-name:menu_id"
-"col-name:menu_date"
-"col-name:currency"
-"expression:\"grel:value_==_\"Dollars\"\""
-"expression:\"grel:or("
-
-/* Edges representing connections between programs and channels */
-"core/text-transform0#" -> table1
-"col-name:created_at" -> "core/text-transform0#"
-"expression:value.toDate()" -> "core/text-transform0#"
-table0 -> "core/text-transform0#"
-"core/row-removal0#" -> table2
-"col-name:price" -> "core/row-removal0#"
-"expression:\"isBlank(value)\"" -> "core/row-removal0#"
-table1 -> "core/row-removal0#"
-"core/text-transform1#" -> table3
-"col-name:price" -> "core/text-transform1#"
-"expression:value.toNumber()" -> "core/text-transform1#"
-table2 -> "core/text-transform1#"
-"core/text-transform2#" -> table4
-"col-name:high_price" -> "core/text-transform2#"
-"expression:value.toNumber()" -> "core/text-transform2#"
-table3 -> "core/text-transform2#"
-"core/text-transform3#" -> table5
-"col-name:high_price" -> "core/text-transform3#"
-"expression:grel:if(isNull(value),_cells[\"prices\"].value,_value)" -> "core/text-transform3#"
-table4 -> "core/text-transform3#"
-"core/text-transform4#" -> table6
-"col-name:high_price" -> "core/text-transform4#"
-"expression:grel:if(isNull(value),_cells[\"price\"].value,_value)" -> "core/text-transform4#"
-table5 -> "core/text-transform4#"
-"core/column-addition0#" -> table7
-"col-name:id" -> "core/column-addition0#"
-"newColumnName:\"dish_name\"" -> "core/column-addition0#"
-table6 -> "core/column-addition0#"
-"core/row-removal1#" -> table8
-"col-name:dish_name" -> "core/row-removal1#"
-"expression:\"grel:isNull(value)\"" -> "core/row-removal1#"
-table7 -> "core/row-removal1#"
-"core/column-addition1#" -> table9
-"col-name:menu_page_id" -> "core/column-addition1#"
-"newColumnName:\"menu_id\"" -> "core/column-addition1#"
-table8 -> "core/column-addition1#"
-"core/column-addition2#" -> table10
-"col-name:menu_id" -> "core/column-addition2#"
-"newColumnName:\"currency\"" -> "core/column-addition2#"
-table9 -> "core/column-addition2#"
-"core/column-addition3#" -> table11
-"col-name:menu_id" -> "core/column-addition3#"
-"newColumnName:\"menu_date\"" -> "core/column-addition3#"
-table10 -> "core/column-addition3#"
-"core/text-transform5#" -> table12
-"col-name:menu_date" -> "core/text-transform5#"
-"expression:value.toDate()" -> "core/text-transform5#"
-table11 -> "core/text-transform5#"
-"core/text-transform6#" -> table13
-"col-name:menu_date" -> "core/text-transform6#"
-"expression:value.toDate()" -> "core/text-transform6#"
-table12 -> "core/text-transform6#"
-"core/row-removal2#" -> table14
-"col-name:currency" -> "core/row-removal2#"
-"expression:\"grel:value_==_\"Dollars\"\"" -> "core/row-removal2#"
-table13 -> "core/row-removal2#"
-"core/row-removal3#" -> table15
-"col-name:dish_name" -> "core/row-removal3#"
-"expression:\"grel:or(" -> "core/row-removal3#"
-table14 -> "core/row-removal3#"
-"core/column-addition4#" -> table16
-"col-name:dish_name" -> "core/column-addition4#"
-"newColumnName:\"dish_type\"" -> "core/column-addition4#"
-table15 -> "core/column-addition4#"
-"core/column-addition5#" -> table17
-"col-name:dish_name" -> "core/column-addition5#"
-"newColumnName:\"normalized_dish_name\"" -> "core/column-addition5#"
-table16 -> "core/column-addition5#"
-"core/row-removal4#" -> table18
-"col-name:menu_date" -> "core/row-removal4#"
-"expression:\"grel:isNull(value)\"" -> "core/row-removal4#"
-table17 -> "core/row-removal4#"
-
-/* End of double cluster for drawing box around nodes in workflow */
-}}
-
-/* End of top-level graph */
+#@begin Linear_OR #@desc Linear OpenRefine Workflow
+#@param newColumnName:dish_name
+#@param col-name:menu_date
+#@param newColumnName:menu_id
+#@param expression:grel:if(isNull(value),_cells["price"].value,_value)
+#@param expression:value.toDate()
+#@param newColumnName:currency
+#@param newColumnName:cpi_raw
+#@param expression:grel:if(isNull(value),_cells["prices"].value,_value)
+#@param newColumnName:menu_date
+#@param col-name:id
+#@param col-name:menu_page_id
+#@param col-name:high_price
+#@param col-name:created_at
+#@param newColumnName:normalized_dish_name
+#@param col-name:dish_name
+#@param newColumnName:dish_type
+#@param col-name:price
+#@param col-name:currency
+#@param expression:"grel:value_==_"Dollars""
+#@param expression:"isBlank(value)"
+#@param col-name:cpi_raw
+#@param col-name:menu_id
+#@param expression:value.toNumber()
+#@param expression:"grel:isNull(value)"
+#@param expression:"grel:or(
+  value.toLowercase().contains("caviar"),
+  value.toLowercase().contains("foie"),
+  value.toLowercase().contains("truffle"),
+  value.toLowercase().contains("lobster"),
+  value.toLowercase().contains("turtle"),
+  value.toLowercase().contains("pate"),
+  value.toLowercase().contains("mumm"),
+  value.toLowercase().contains("champagne"),
+  value.toLowercase().contains("quenelle"),
+  value.toLowercase().contains("duxelle"),
+  value.toLowercase().contains("soup"),
+  value.toLowercase().contains("gumbo"),
+  value.toLowercase().contains("rice"),
+  value.toLowercase().contains("potato"),
+  value.toLowercase().contains("apple"),
+  value.toLowercase().contains("banana"),
+  value.toLowercase().contains("onion"),
+  value.toLowercase().contains("beef"),
+  value.toLowercase().contains("milk"),
+  value.toLowercase().contains("oats")
+)"
+#@in table0
+#@out table20
+#@begin core/text-transform0#@desc Text transform on cells in column created_at using expression value.toDate()
+#@param col-name:created_at
+#@param expression:value.toDate()
+#@in table0
+#@out table1
+#@end core/text-transform0
+#@begin core/row-removal0#@desc Remove rows
+#@param col-name:price
+#@param expression:"isBlank(value)"
+#@in table1
+#@out table2
+#@end core/row-removal0
+#@begin core/text-transform1#@desc Text transform on cells in column price using expression value.toNumber()
+#@param col-name:price
+#@param expression:value.toNumber()
+#@in table2
+#@out table3
+#@end core/text-transform1
+#@begin core/text-transform2#@desc Text transform on cells in column high_price using expression value.toNumber()
+#@param col-name:high_price
+#@param expression:value.toNumber()
+#@in table3
+#@out table4
+#@end core/text-transform2
+#@begin core/text-transform3#@desc Text transform on cells in column high_price using expression grel:if(isNull(value), cells[\"prices\"].value, value)
+#@param col-name:high_price
+#@param expression:grel:if(isNull(value),_cells["prices"].value,_value)
+#@in table4
+#@out table5
+#@end core/text-transform3
+#@begin core/text-transform4#@desc Text transform on cells in column high_price using expression grel:if(isNull(value), cells[\"price\"].value, value)
+#@param col-name:high_price
+#@param expression:grel:if(isNull(value),_cells["price"].value,_value)
+#@in table5
+#@out table6
+#@end core/text-transform4
+#@begin core/column-addition0#@desc Create column dish_name at index 1 based on column id using expression grel:cell.cross(\"NYPL_Dish\", \"id\").cells[\"name\"].value[0]
+#@param col-name:id
+#@param newColumnName:"dish_name"
+#@in table6
+#@out table7
+#@end core/column-addition0
+#@begin core/row-removal1#@desc Remove rows
+#@param col-name:dish_name
+#@param expression:"grel:isNull(value)"
+#@in table7
+#@out table8
+#@end core/row-removal1
+#@begin core/column-addition1#@desc Create column menu_id at index 3 based on column menu_page_id using expression grel:cell.cross(\"NYPL_MenuPage\", \"id\").cells[\"menu_id\"].value[0]
+#@param col-name:menu_page_id
+#@param newColumnName:"menu_id"
+#@in table8
+#@out table9
+#@end core/column-addition1
+#@begin core/column-addition2#@desc Create column currency at index 4 based on column menu_id using expression grel:cell.cross(\"NYPL_Menu\", \"id\").cells[\"currency\"].value[0]
+#@param col-name:menu_id
+#@param newColumnName:"currency"
+#@in table9
+#@out table10
+#@end core/column-addition2
+#@begin core/column-addition3#@desc Create column menu_date at index 4 based on column menu_id using expression grel:cell.cross(\"NYPL_Menu\", \"id\").cells[\"date\"].value[0]
+#@param col-name:menu_id
+#@param newColumnName:"menu_date"
+#@in table10
+#@out table11
+#@end core/column-addition3
+#@begin core/text-transform5#@desc Text transform on cells in column menu_date using expression value.toDate()
+#@param col-name:menu_date
+#@param expression:value.toDate()
+#@in table11
+#@out table12
+#@end core/text-transform5
+#@begin core/text-transform6#@desc Text transform on cells in column menu_date using expression value.toDate()
+#@param col-name:menu_date
+#@param expression:value.toDate()
+#@in table12
+#@out table13
+#@end core/text-transform6
+#@begin core/row-removal2#@desc Remove rows
+#@param col-name:currency
+#@param expression:"grel:value_==_"Dollars""
+#@in table13
+#@out table14
+#@end core/row-removal2
+#@begin core/row-removal3#@desc Remove rows
+#@param col-name:dish_name
+#@param expression:"grel:or(
+  value.toLowercase().contains("caviar"),
+  value.toLowercase().contains("foie"),
+  value.toLowercase().contains("truffle"),
+  value.toLowercase().contains("lobster"),
+  value.toLowercase().contains("turtle"),
+  value.toLowercase().contains("pate"),
+  value.toLowercase().contains("mumm"),
+  value.toLowercase().contains("champagne"),
+  value.toLowercase().contains("quenelle"),
+  value.toLowercase().contains("duxelle"),
+  value.toLowercase().contains("soup"),
+  value.toLowercase().contains("gumbo"),
+  value.toLowercase().contains("rice"),
+  value.toLowercase().contains("potato"),
+  value.toLowercase().contains("apple"),
+  value.toLowercase().contains("banana"),
+  value.toLowercase().contains("onion"),
+  value.toLowercase().contains("beef"),
+  value.toLowercase().contains("milk"),
+  value.toLowercase().contains("oats")
+)"
+#@in table14
+#@out table15
+#@end core/row-removal3
+#@begin core/column-addition4#@desc Create column dish_type at index 2 based on column dish_name using expression grel:if(
+  or(
+    value.toLowercase().contains(\"caviar\"),
+    value.toLowercase().contains(\"foie\"),
+    value.toLowercase().contains(\"truffle\"),
+    value.toLowercase().contains(\"lobster\"),
+    value.toLowercase().contains(\"turtle\"),
+    value.toLowercase().contains(\"pate\"),
+    value.toLowercase().contains(\"mumm\"),
+    value.toLowercase().contains(\"champagne\"),
+    value.toLowercase().contains(\"quenelle\"),
+    value.toLowercase().contains(\"duxelle\")
+  ),
+  \"Luxury\",
+  if(
+    or(
+      value.toLowercase().contains(\"soup\"),
+      value.toLowercase().contains(\"gumbo\"),
+      value.toLowercase().contains(\"rice\"),
+      value.toLowercase().contains(\"potato\"),
+      value.toLowercase().contains(\"apple\"),
+      value.toLowercase().contains(\"banana\"),
+      value.toLowercase().contains(\"onion\"),
+      value.toLowercase().contains(\"beef\"),
+      value.toLowercase().contains(\"milk\"),
+      value.toLowercase().contains(\"oats\")
+    ),
+    \"Staple\",
+    \"Other\"
+  )
+)
+#@param col-name:dish_name
+#@param newColumnName:"dish_type"
+#@in table15
+#@out table16
+#@end core/column-addition4
+#@begin core/column-addition5#@desc Create column normalized_dish_name at index 2 based on column dish_name using expression grel:filter(
+  [\"caviar\", \"foie\", \"truffle\", \"lobster\", \"turtle\", \"pate\", \"mumm\", \"champagne\", \"quenelle\", \"duxelle\", \"soup\", \"gumbo\", \"rice\", \"potato\", \"apple\", \"banana\", \"onion\", \"beef\", \"milk\", \"oats\"],
+  k,
+  value.toLowercase().contains(k)
+)[0]
+#@param col-name:dish_name
+#@param newColumnName:"normalized_dish_name"
+#@in table16
+#@out table17
+#@end core/column-addition5
+#@begin core/row-removal4#@desc Remove rows
+#@param col-name:menu_date
+#@param expression:"grel:isNull(value)"
+#@in table17
+#@out table18
+#@end core/row-removal4
+#@begin core/column-addition6#@desc Create column cpi_raw at index 7 based on column menu_date using expression jython:year = str(value)[0:4]
+cpi_map = {
+  \"1890\": 9.10,
+  \"1891\": 9.03,
+  \"1892\": 8.96,
+  \"1893\": 8.89,
+  \"1894\": 8.82,
+  \"1895\": 8.75,
+  \"1896\": 8.68,
+  \"1897\": 8.61,
+  \"1898\": 8.54,
+  \"1899\": 8.47,
+  \"1900\": 8.40,
+  \"1901\": 8.51,
+  \"1902\": 8.62,
+  \"1903\": 8.73,
+  \"1904\": 8.84,
+  \"1905\": 8.95,
+  \"1906\": 9.06,
+  \"1907\": 9.17,
+  \"1908\": 9.28,
+  \"1909\": 9.39,
+  \"1910\": 9.50,
+  \"1911\": 10.55,
+  \"1912\": 11.60,
+  \"1913\": 12.65,
+  \"1914\": 13.70,
+  \"1915\": 14.75,
+  \"1916\": 15.80,
+  \"1917\": 16.85,
+  \"1918\": 17.90,
+  \"1919\": 18.95,
+  \"1920\": 20.00,
+  \"1921\": 19.71,
+  \"1922\": 19.42,
+  \"1923\": 19.13,
+  \"1924\": 18.84,
+  \"1925\": 18.55,
+  \"1926\": 18.26,
+  \"1927\": 17.97,
+  \"1928\": 17.68,
+  \"1929\": 17.39,
+  \"1930\": 17.10,
+  \"1931\": 16.79,
+  \"1932\": 16.48,
+  \"1933\": 16.17,
+  \"1934\": 15.86,
+  \"1935\": 15.55,
+  \"1936\": 15.24,
+  \"1937\": 14.93,
+  \"1938\": 14.62,
+  \"1939\": 14.31,
+  \"1940\": 14.00
 }
+return cpi_map[year]
+#@param col-name:menu_date
+#@param newColumnName:"cpi_raw"
+#@in table18
+#@out table19
+#@end core/column-addition6
+#@begin core/row-removal5#@desc Remove rows
+#@param col-name:cpi_raw
+#@param expression:"grel:isNull(value)"
+#@in table19
+#@out table20
+#@end core/row-removal5
+#@end Linear_OR

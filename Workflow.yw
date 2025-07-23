@@ -1,12 +1,22 @@
 #@begin Linear_OR #@desc Linear OpenRefine Workflow
-#@param expression:"grel:isNull(value)"
-#@param newColumnName:normalized_dish_name
-#@param expression:"isBlank(value)"
+#@param expression:value.toNumber()
 #@param expression:value.toDate()
-#@param col-name:menu_date
+#@param newColumnName:dish_name
+#@param col-name:id
 #@param col-name:high_price
+#@param newColumnName:normalized_dish_name
+#@param newColumnName:menu_date
+#@param col-name:created_at
+#@param expression:"isBlank(value)"
+#@param col-name:currency
+#@param expression:"grel:isNull(value)"
+#@param col-name:menu_date
+#@param newColumnName:cpi_raw
 #@param col-name:menu_id
+#@param col-name:menu_page_id
+#@param expression:grel:if(isNull(value),_cells["price"].value,_value)
 #@param newColumnName:dish_type
+#@param col-name:price
 #@param expression:"grel:or(
   value.toLowercase().contains("caviar"),
   value.toLowercase().contains("foie"),
@@ -29,22 +39,14 @@
   value.toLowercase().contains("milk"),
   value.toLowercase().contains("oats")
 )"
-#@param newColumnName:menu_date
-#@param col-name:dish_name
-#@param col-name:menu_page_id
-#@param col-name:price
-#@param col-name:currency
 #@param expression:grel:if(isNull(value),_cells["prices"].value,_value)
-#@param expression:value.toNumber()
-#@param newColumnName:currency
-#@param col-name:created_at
 #@param newColumnName:menu_id
-#@param col-name:id
+#@param col-name:cpi_raw
+#@param newColumnName:currency
+#@param col-name:dish_name
 #@param expression:"grel:value_==_"Dollars""
-#@param expression:grel:if(isNull(value),_cells["price"].value,_value)
-#@param newColumnName:dish_name
 #@in table0
-#@out table18
+#@out table20
 #@begin core/text-transform0#@desc Text transform on cells in column created_at using expression value.toDate()
 #@param col-name:created_at
 #@param expression:value.toDate()
@@ -208,4 +210,70 @@
 #@in table17
 #@out table18
 #@end core/row-removal4
+#@begin core/column-addition6#@desc Create column cpi_raw at index 7 based on column menu_date using expression jython:year = str(value)[0:4]
+cpi_map = {
+  \"1890\": 9.10,
+  \"1891\": 9.03,
+  \"1892\": 8.96,
+  \"1893\": 8.89,
+  \"1894\": 8.82,
+  \"1895\": 8.75,
+  \"1896\": 8.68,
+  \"1897\": 8.61,
+  \"1898\": 8.54,
+  \"1899\": 8.47,
+  \"1900\": 8.40,
+  \"1901\": 8.51,
+  \"1902\": 8.62,
+  \"1903\": 8.73,
+  \"1904\": 8.84,
+  \"1905\": 8.95,
+  \"1906\": 9.06,
+  \"1907\": 9.17,
+  \"1908\": 9.28,
+  \"1909\": 9.39,
+  \"1910\": 9.50,
+  \"1911\": 10.55,
+  \"1912\": 11.60,
+  \"1913\": 12.65,
+  \"1914\": 13.70,
+  \"1915\": 14.75,
+  \"1916\": 15.80,
+  \"1917\": 16.85,
+  \"1918\": 17.90,
+  \"1919\": 18.95,
+  \"1920\": 20.00,
+  \"1921\": 19.71,
+  \"1922\": 19.42,
+  \"1923\": 19.13,
+  \"1924\": 18.84,
+  \"1925\": 18.55,
+  \"1926\": 18.26,
+  \"1927\": 17.97,
+  \"1928\": 17.68,
+  \"1929\": 17.39,
+  \"1930\": 17.10,
+  \"1931\": 16.79,
+  \"1932\": 16.48,
+  \"1933\": 16.17,
+  \"1934\": 15.86,
+  \"1935\": 15.55,
+  \"1936\": 15.24,
+  \"1937\": 14.93,
+  \"1938\": 14.62,
+  \"1939\": 14.31,
+  \"1940\": 14.00
+}
+return cpi_map[year]
+#@param col-name:menu_date
+#@param newColumnName:"cpi_raw"
+#@in table18
+#@out table19
+#@end core/column-addition6
+#@begin core/row-removal5#@desc Remove rows
+#@param col-name:cpi_raw
+#@param expression:"grel:isNull(value)"
+#@in table19
+#@out table20
+#@end core/row-removal5
 #@end Linear_OR
