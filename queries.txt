@@ -1,5 +1,3 @@
-SELECT COUNT(*) FROM df;
-
 SELECT COUNT(*) FROM df WHERE dish_name IS NULL OR menu_date IS NULL;
 
 SELECT COUNT(DISTINCT dish_name) FROM df;
